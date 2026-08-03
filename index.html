@@ -618,8 +618,10 @@
       let reqInputs = document.querySelectorAll('.ing-req');
       let btn = document.getElementById('btn-guardar-ing');
 // --- MODIFICACIÓN: Bloquear/Desbloquear Total y Proveedor ---
-  let inputTotal = document.getElementById('ing-total');         // Asegúrate de que este sea el ID de tu input total
-  let inputProveedor = document.getElementById('ing-proveedor'); // Asegúrate de que este sea el ID de tu input proveedor
+  let inputTotal = document.getElementById('ing-precio');         // Asegúrate de que este sea el ID de tu input total
+  let inputProveedor = document.getElementById('lista-proveedor'); // Asegúrate de que este sea el ID de tu input proveedor
+let inputProveedor = document.getElementById('lista-medidas'); // Asegúrate de que este sea el ID de tu input proveedor
+     let inputProveedor = document.getElementById('lista-densidades'); // Asegúrate de que este sea el ID de tu input proveedor 
       reqInputs.forEach(i => {
         i.required = !chk;
         i.disabled = chk;
