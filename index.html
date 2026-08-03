@@ -617,7 +617,9 @@
       let chk = document.getElementById('ing-chk-solo-desc').checked;
       let reqInputs = document.querySelectorAll('.ing-req');
       let btn = document.getElementById('btn-guardar-ing');
-
+// --- MODIFICACIÓN: Bloquear/Desbloquear Total y Proveedor ---
+  let inputTotal = document.getElementById('ing-total');         // Asegúrate de que este sea el ID de tu input total
+  let inputProveedor = document.getElementById('ing-proveedor'); // Asegúrate de que este sea el ID de tu input proveedor
       reqInputs.forEach(i => {
         i.required = !chk;
         i.disabled = chk;
