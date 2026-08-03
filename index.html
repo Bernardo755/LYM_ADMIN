@@ -5,21 +5,20 @@
   <title>Sistema de Gestión LYM</title>
   
   <!-- ==========================================
-       MÓDULO: ESTILOS (CSS CAPAS MODERNAS)
+       MÓDULO: ESTILOS (CSS CONFIGURABLE Y CAPAS MODERNIZADAS)
        ========================================== -->
   <style>
     :root {
       /* COLORES PRINCIPALES */
-      --color-fondo: #eceff1;
+      --color-fondo: #f4f6f9;
       --color-panel: #ffffff;
       --color-primario: #0056b3;
       --color-primario-hover: #004494;
       --color-exito: #28a745;
       --color-peligro: #dc3545;
-      --color-texto: #2c3e50;
-      --color-borde: #dcdfe6;
-      --sombra-capa: 0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
-      --sombra-capa-hover: 0 8px 20px rgba(0, 0, 0, 0.12);
+      --color-texto: #333333;
+      --color-borde: #dce2e6;
+      --color-sombra: rgba(0, 86, 179, 0.08);
       
       /* MEDIDAS Y FORMATOS */
       --radio-borde: 10px;
@@ -38,60 +37,59 @@
       font-size: var(--tamano-fuente-base);
     }
 
-    /* CAPAS Y PANELES MEJORADOS CON PROFUNDIDAD VISUAL */
+    /* CAPAS / PANELS MÁS VISIBLES Y DEFINIDOS */
     .panel {
       background-color: var(--color-panel);
       padding: var(--espaciado-panel);
       border-radius: var(--radio-borde);
-      border: 1px solid rgba(220, 224, 230, 0.7);
-      box-shadow: var(--sombra-capa);
+      border: 1px solid var(--color-borde);
+      box-shadow: 0 6px 18px var(--color-sombra);
       margin: 20px auto;
-      transition: box-shadow 0.3s ease;
-    }
-    
-    .panel:hover {
-      box-shadow: var(--sombra-capa-hover);
+      transition: all 0.3s ease;
     }
 
     input[type="text"], input[type="password"], input[type="number"], select, input[type="file"] {
-      width: 100%; padding: 10px 12px; margin: 8px 0 15px;
-      border: 1px solid var(--color-borde);
+      width: 100%; padding: 10px 12px; margin: 6px 0 14px;
+      border: 1px solid #c4cdd5;
       border-radius: 6px;
       box-sizing: border-box;
-      background-color: #fdfdfd;
-      font-size: 14px;
+      background-color: #fafbfc;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
 
-    input[type="text"]:focus, input[type="password"]:focus, input[type="number"]:focus, select:focus {
+    input:focus, select:focus {
       border-color: var(--color-primario);
       outline: none;
       box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.15);
+      background-color: #fff;
     }
 
     .btn {
       background-color: var(--color-primario); color: white;
       padding: 10px 20px; border: none; border-radius: 6px;
-      cursor: pointer; font-weight: bold; transition: all 0.2s ease;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      cursor: pointer; font-weight: bold; transition: background 0.3s, transform 0.1s;
+      display: inline-block; text-align: center;
     }
-    .btn:hover { background-color: var(--color-primario-hover); transform: translateY(-1px); }
+    .btn:hover { background-color: var(--color-primario-hover); }
+    .btn:active { transform: scale(0.98); }
     .btn-salir { background-color: var(--color-peligro); float: right;}
-    .btn-accion { background-color: var(--color-exito); width: 100%; margin-top: 15px; padding: 12px; font-size: 16px;}
-    .btn-secundario { background-color: #6c757d; }
-    
-    table { width: 100%; border-collapse: collapse; margin-top: 15px; background: white; border-radius: 6px; overflow: hidden; }
-    th, td { border: 1px solid var(--color-borde); padding: 10px; text-align: left; font-size: 14px; }
-    th { background-color: var(--color-primario); color: white; font-weight: 600; }
-    tr:nth-child(even) { background-color: #f8f9fa; }
+    .btn-accion { background-color: var(--color-exito); width: 100%; margin-top: 10px; padding: 12px;}
+    .btn-secundario { background-color: #6c757d; margin-top: 10px; }
+
+    /* TABLAS ESTILIZADAS */
+    table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 15px; border-radius: 8px; overflow: hidden; border: 1px solid var(--color-borde); }
+    th, td { border-bottom: 1px solid var(--color-borde); border-right: 1px solid var(--color-borde); padding: 10px; text-align: left; font-size: 14px; }
+    th { background-color: var(--color-primario); color: white; font-weight: 600; text-transform: uppercase; font-size: 13px; }
+    tr:last-child td { border-bottom: none; }
+    tr:nth-child(even) { background-color: #f8fafc; }
 
     #app-container { display: none; max-width: var(--ancho-max-app); margin: 0 auto; padding: 20px; }
     #login-container { max-width: var(--ancho-max-login); margin: 80px auto; }
     
-    .nav-tabs { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 2px solid var(--color-borde); padding-bottom: 8px; flex-wrap: wrap;}
-    .tab { cursor: pointer; padding: 10px 18px; border-radius: 6px; background: #e2e8f0; font-weight: 600; color: #4a5568; transition: all 0.2s;}
-    .tab:hover { background: #cbd5e0; }
-    .tab.active { background: var(--color-primario); color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .nav-tabs { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 2px solid var(--color-borde); padding-bottom: 8px;}
+    .tab { cursor: pointer; padding: 10px 18px; border-radius: 6px 6px 0 0; background: #e9ecef; font-weight: 600; color: #495057; transition: all 0.2s;}
+    .tab.active { background: var(--color-primario); color: white; }
+    .tab:hover:not(.active) { background: #dee2e6; }
     
     .seccion { display: none; }
     .seccion.active { display: block; }
@@ -105,24 +103,23 @@
       object-fit: contain;
     }
 
+    /* ESTILOS DE CALCULADORA */
+    .calc-table input { margin: 0; padding: 6px; font-size: 13px; }
+    .calc-table td { padding: 5px; }
+
     .checkbox-container {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin: 10px 0;
-      background: #f0f7ff;
+      gap: 10px;
+      background: #eef4fc;
       padding: 10px;
       border-radius: 6px;
-      border: 1px solid #bae6fd;
+      border: 1px solid #b8daff;
+      margin-bottom: 15px;
+      grid-column: span 2;
     }
     .checkbox-container input { width: auto; margin: 0; cursor: pointer; }
-    
-    .preview-img { max-width: 100px; max-height: 100px; display: none; margin-top: 5px; border-radius: 4px; border: 1px solid #ccc; }
-    
-    /* MODAL DE VISUALIZACIÓN DE FOTO */
-    .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; }
-    .modal-content { background: white; padding: 20px; border-radius: 8px; max-width: 500px; text-align: center; }
-    .modal-content img { max-width: 100%; max-height: 400px; border-radius: 6px; }
+    .btn-ver-foto { background-color: #17a2b8; color: white; padding: 4px 8px; border-radius: 4px; text-decoration: none; font-size: 12px; font-weight: bold; }
   </style>
 </head>
 <body>
@@ -130,78 +127,81 @@
   <!-- VISTA 1: INGRESO -->
   <div id="login-container" class="panel">
     <img src="LYM.png" alt="Logo Empresa" class="logo-empresa">
-    <h2 style="text-align: center;">ACCESO DE SISTEMA</h2>
+    <h2 style="text-align: center; color: var(--color-primario); margin-top: 0;">ACCESO DE SISTEMA</h2>
     <form id="form-login" autocomplete="off" onsubmit="event.preventDefault(); iniciarSesion();">
       <label>Usuario:</label>
       <input type="text" id="user" required>
       <label>Contraseña:</label>
       <input type="password" id="pass" required>
       <button type="submit" class="btn" style="width: 100%;">Ingresar</button>
-      <p id="msg-login" style="color: var(--color-peligro); text-align: center; margin-top: 10px;"></p>
+      <p id="msg-login" style="color: var(--color-peligro); text-align: center; font-weight: bold;"></p>
     </form>
   </div>
 
   <!-- VISTA 2: APLICACIÓN -->
   <div id="app-container">
     <button class="btn btn-salir" onclick="cerrarSesion()">Cerrar Sesión</button>
-    <img src="LYM.png" alt="Logo Empresa" class="logo-empresa" style="margin: 0 0 20px 0; float: left; max-width: 80px;">
+    <img src="LYM.png" alt="Logo Empresa" class="logo-empresa" style="margin: 0 15px 20px 0; float: left; max-width: 80px;">
     
-    <h2 style="clear: both;">Consola de Administración</h2>
+    <h2 style="clear: right; color: var(--color-primario);">Consola de Administración</h2>
     
-    <div class="nav-tabs" id="tabs-bar">
-      <div class="tab admin-only" onclick="cambiarPestana('calculadora')">Calculadora</div>
-      <div class="tab active" onclick="cambiarPestana('buscador')">Buscador</div>
-      <div class="tab admin-only" onclick="cambiarPestana('ingresos')">Registrar Ingreso</div>
-      <div class="tab admin-only" onclick="cambiarPestana('salidas')">Registrar Salida</div>
+    <!-- PESTAÑAS NAVEGACIÓN -->
+    <div class="nav-tabs" id="main-nav-tabs">
+      <div class="tab" id="tab-calc" onclick="cambiarPestana('calculadora')">Calculadora</div>
+      <div class="tab active" id="tab-busq" onclick="cambiarPestana('buscador')">Buscador</div>
+      <div class="tab" id="tab-ing" onclick="cambiarPestana('ingresos')">Registrar Ingreso</div>
+      <div class="tab" id="tab-sal" onclick="cambiarPestana('salidas')">Registrar Salida</div>
     </div>
 
-    <!-- SECCIÓN: CALCULADORA -->
+    <!-- SECCIÓN 0: CALCULADORA (NUEVO MÓDULO ANTES DEL BUSCADOR) -->
     <div id="sec-calculadora" class="seccion panel">
-      <h3>Calculadora de Facturación y Costos</h3>
+      <h3>Calculadora de Regla de Tres y Costos</h3>
       <div style="overflow-x: auto;">
-        <table id="tabla-calculadora">
+        <table class="calc-table">
           <thead>
             <tr>
               <th>Precio ($)</th>
-              <th>Factor Inicial</th>
-              <th>Factor Final</th>
-              <th>Porcentaje (%)</th>
+              <th>Factor In.</th>
+              <th>Factor Fin.</th>
+              <th>%</th>
               <th>Piezas</th>
               <th>Factura</th>
-              <th>Con Porcentaje</th>
-              <th>Subtotal + %</th>
+              <th>Con %</th>
+              <th>Subtotal</th>
               <th>Precio Total</th>
               <th>Acción</th>
             </tr>
           </thead>
-          <tbody id="body-calculadora"></tbody>
+          <tbody id="calc-body">
+            <!-- Filas dinámicas -->
+          </tbody>
         </table>
       </div>
-      <button class="btn btn-secundario" style="margin-top: 15px;" onclick="agregarFilaCalculadora()">+ Agregar Fila</button>
+      <button class="btn btn-secundario" onclick="agregarFilaCalculadora()">+ Agregar Fila</button>
     </div>
 
-    <!-- SECCIÓN: BUSCADOR -->
+    <!-- SECCIÓN 1: BUSCADOR -->
     <div id="sec-buscador" class="seccion active panel">
       <h3>Buscar en Inventario</h3>
       <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-        <input type="text" id="busq-texto" placeholder="Buscar producto (Mín. 3 letras)..." style="flex: 1; min-width: 200px;">
+        <input type="text" id="busq-texto" placeholder="Buscar producto (Mín. 3 letras)..." style="flex: 2; min-width: 200px;">
         
         <select id="busq-general" style="flex: 1; min-width: 150px;">
           <option value="TODO">Búsqueda en todo</option>
-          <option value="espuma">Espuma</option>
-          <option value="barniz">Barniz</option>
-          <option value="madera">Madera</option>
-          <option value="herrajes">Herrajes</option>
-          <option value="lijas">Lijas</option>
-          <option value="empaque">Empaque</option>
-          <option value="telas">Telas</option>
-          <option value="estructuras">Estructuras</option>
-          <option value="otro">Otro</option>
+          <option value="Espuma">Espuma</option>
+          <option value="Barniz">Barniz</option>
+          <option value="Madera">Madera</option>
+          <option value="Herrajes">Herrajes</option>
+          <option value="Lijas">Lijas</option>
+          <option value="Empaque">Empaque</option>
+          <option value="Telas">Telas</option>
+          <option value="Estructuras">Estructuras</option>
+          <option value="Otro">Otro</option>
         </select>
         
         <select id="busq-especifica" style="flex: 1; min-width: 150px;">
           <option value="">Sin filtro específico</option>
-          <option value="MEDIDAS">Grosor</option>
+          <option value="MEDIDAS">Grosor / Medidas</option>
           <option value="DENSIDAD">Densidad</option>
         </select>
         
@@ -217,108 +217,129 @@
       </div>
     </div>
 
-    <!-- SECCIÓN: INGRESOS -->
+    <!-- SECCIÓN 2: INGRESOS -->
     <div id="sec-ingresos" class="seccion panel">
       <h3>Registro de Ingresos</h3>
-      <form id="form-ingresos">
-        
-        <div class="checkbox-container">
-          <input type="checkbox" id="ing-chk-edicion" onchange="toggleEdicionDescripcion()">
-          <label for="ing-chk-edicion"><strong>Editar únicamente la descripción de un producto existente</strong></label>
-        </div>
+      
+      <div class="checkbox-container">
+        <input type="checkbox" id="ing-chk-solo-desc" onchange="toggleEdicionDescripcion()">
+        <label for="ing-chk-solo-desc"><strong>Editar únicamente la descripción de un producto existente</strong></label>
+      </div>
 
+      <form id="form-ingresos">
         <div class="form-grid">
           <div>
             <label>Nombre/Producto:</label>
             <input type="text" id="ing-nombre" list="lista-inventario" onchange="verificarSiExiste('ing')" required>
             <small id="ing-aviso"></small>
           </div>
-          
           <div>
             <label>Tipo:</label>
-            <select id="ing-tipo" required>
-              <option value="">Seleccione...</option>
-              <option value="espuma">Espuma</option>
-              <option value="barniz">Barniz</option>
-              <option value="madera">Madera</option>
-              <option value="herrajes">Herrajes</option>
-              <option value="lijas">Lijas</option>
-              <option value="empaque">Empaque</option>
-              <option value="telas">Telas</option>
-              <option value="estructuras">Estructuras</option>
-              <option value="otro">Otro</option>
+            <select id="ing-tipo" class="ing-req" required>
+              <option value="">Seleccione Tipo...</option>
+              <option value="Espuma">Espuma</option>
+              <option value="Barniz">Barniz</option>
+              <option value="Madera">Madera</option>
+              <option value="Herrajes">Herrajes</option>
+              <option value="Lijas">Lijas</option>
+              <option value="Empaque">Empaque</option>
+              <option value="Telas">Telas</option>
+              <option value="Estructuras">Estructuras</option>
+              <option value="Otro">Otro</option>
             </select>
           </div>
-          
           <div>
             <label>Unidad de Medida:</label>
-            <select id="ing-unidad" required></select>
+            <select id="ing-unidad" class="ing-req" required></select>
           </div>
-          
           <div>
             <label>Grosor:</label>
             <select id="ing-medidas"></select>
           </div>
-          
-          <div><label>Densidad:</label><input type="text" id="ing-densidad"></div>
-          
-          <div><label>Cantidad:</label><input type="number" step="0.01" id="ing-cantidad" required oninput="calcularTotal('ing')"></div>
-          <div><label>Precio:</label><input type="number" step="0.01" id="ing-precio" required oninput="calcularTotal('ing')"></div>
-          <div><label>Total:</label><input type="number" id="ing-total" readonly></div>
-          
+          <div>
+            <label>Densidad:</label>
+            <select id="ing-densidad"></select>
+          </div>
+          <div>
+            <label>Cantidad:</label>
+            <input type="number" step="0.01" id="ing-cantidad" class="ing-req" required oninput="calcularTotal('ing')">
+          </div>
+          <div>
+            <label>Precio ($):</label>
+            <input type="number" step="0.01" id="ing-precio" class="ing-req" required oninput="calcularTotal('ing')">
+          </div>
+          <div>
+            <label>Total ($):</label>
+            <input type="number" id="ing-total" readonly>
+          </div>
           <div>
             <label>Proveedor:</label>
             <select id="ing-proveedor"></select>
           </div>
-          
-          <div><label>Entregó a:</label><select id="ing-entregoa" required></select></div>
-          
           <div>
-            <label>Fotografía del Producto:</label>
-            <input type="file" id="ing-foto" accept="image/*" capture="environment" onchange="previsualizarFoto(this, 'ing-img-preview')">
-            <img id="ing-img-preview" class="preview-img" alt="Vista previa">
+            <label>Entregó a:</label>
+            <select id="ing-entregoa" class="ing-req" required></select>
           </div>
-
-          <div style="grid-column: span 2;"><label>Descripción:</label><input type="text" id="ing-descripcion"></div>
+          <div style="grid-column: span 2;">
+            <label>Descripción:</label>
+            <input type="text" id="ing-descripcion">
+          </div>
+          <div style="grid-column: span 2;">
+            <label>Fotografía del producto (Opcional):</label>
+            <input type="file" id="ing-foto" accept="image/*" capture="environment" onchange="procesarFoto(this, 'ing-foto-data')">
+            <input type="hidden" id="ing-foto-data">
+          </div>
         </div>
-        <button type="button" class="btn btn-accion" onclick="guardarTransaccion('INGRESO')">Registrar Ingreso</button>
+        <button type="button" id="btn-guardar-ing" class="btn btn-accion" onclick="guardarTransaccion('INGRESO')">Registrar Ingreso</button>
       </form>
     </div>
 
-    <!-- SECCIÓN: SALIDAS -->
+    <!-- SECCIÓN 3: SALIDAS -->
     <div id="sec-salidas" class="seccion panel">
       <h3>Registro de Salidas</h3>
       <form id="form-salidas">
         <div class="form-grid">
-          <div><label>Producto:</label><input type="text" id="sal-nombre" list="lista-inventario" onchange="verificarSiExiste('sal')" required></div>
-          <div><label>Tipo:</label><input type="text" id="sal-tipo" readonly></div>
-          <div><label>Unidad de Medida:</label><input type="text" id="sal-unidad" readonly></div>
-          <div><label>Cantidad:</label><input type="number" step="0.01" id="sal-cantidad" required></div>
-          
+          <div style="grid-column: span 2;">
+            <label>Producto:</label>
+            <input type="text" id="sal-nombre" list="lista-inventario" onchange="cargarDatosSalida()" required>
+          </div>
+          <div>
+            <label>Tipo:</label>
+            <input type="text" id="sal-tipo" readonly style="background:#e9ecef;">
+          </div>
+          <div>
+            <label>Unidad de Medida:</label>
+            <input type="text" id="sal-unidad" readonly style="background:#e9ecef;">
+          </div>
+          <div>
+            <label>Cantidad a Sacar:</label>
+            <input type="number" step="0.01" id="sal-cantidad" required>
+          </div>
           <div>
             <label>Tipo de Asignación:</label>
-            <select id="sal-tipo-asignacion" onchange="toggleOrdenProduccion()" required>
-              <option value="">Seleccione...</option>
+            <select id="sal-tipo-asig" onchange="toggleTipoAsignacion()" required>
               <option value="Orden de Producción">Orden de Producción</option>
               <option value="Asignación">Asignación</option>
               <option value="Préstamo">Préstamo</option>
             </select>
           </div>
-
-          <div id="box-orden-prod" style="display:none;">
-            <label>N° Orden de Producción:</label>
-            <input type="text" id="sal-orden">
+          <div id="div-sal-orden">
+            <label>No. Orden de Producción:</label>
+            <input type="text" id="sal-orden" placeholder="Escriba la orden...">
           </div>
-          
-          <div><label>Se entrega a:</label><select id="sal-entregoa" required></select></div>
-          
           <div>
-            <label>Fotografía de Salida:</label>
-            <input type="file" id="sal-foto" accept="image/*" capture="environment" onchange="previsualizarFoto(this, 'sal-img-preview')">
-            <img id="sal-img-preview" class="preview-img" alt="Vista previa">
+            <label>Se entrega a:</label>
+            <select id="sal-entregoa" required></select>
           </div>
-
-          <div style="grid-column: span 2;"><label>Descripción:</label><input type="text" id="sal-descripcion"></div>
+          <div style="grid-column: span 2;">
+            <label>Descripción / Notas:</label>
+            <input type="text" id="sal-descripcion">
+          </div>
+          <div style="grid-column: span 2;">
+            <label>Fotografía de la Salida (Opcional):</label>
+            <input type="file" id="sal-foto" accept="image/*" capture="environment" onchange="procesarFoto(this, 'sal-foto-data')">
+            <input type="hidden" id="sal-foto-data">
+          </div>
         </div>
         <button type="button" class="btn btn-accion" onclick="guardarTransaccion('SALIDA')">Registrar Salida</button>
       </form>
@@ -327,23 +348,14 @@
     <datalist id="lista-inventario"></datalist>
   </div>
 
-  <!-- MODAL FOTO -->
-  <div id="modal-foto" class="modal">
-    <div class="modal-content">
-      <img id="img-modal-src" src="" alt="Foto Producto">
-      <br><br>
-      <button class="btn btn-secundario" onclick="cerrarModalFoto()">Cerrar</button>
-    </div>
-  </div>
-
   <!-- ==========================================
        MÓDULO: ENLACE Y LÓGICA DE CONTROL (JS)
        ========================================== -->
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvzYp7q31AQPvxuaabnQzovfyE9FUUiDMoxEI6p9P5iKTiPTwWDaCf4tvdEfFUtJpPXw/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzI0Cvggn6haDNRS_cn6HgP4ALkGIFD8Nx2pz2CbubwOoCiP1CExTBfQv2DY6VKQpsZag/exec";
 
     let timerInactividad;
-    const TIEMPO_EXPIRACION = 3600000;
+    const TIEMPO_EXPIRACION = 3600000; // 1 hora
     let datosCargados = {};
     let usuarioActual = null;
 
@@ -357,21 +369,47 @@
         });
         return await respuesta.json();
       } catch (error) {
-        console.error("Error en enlace de API:", error);
+        console.error("Error en API:", error);
         return { success: false, message: "Error al conectar con la base de datos distribuida." };
       }
     }
 
-    // CONTROL DE INACTIVIDAD
+    // LISTENER PARA CONTROLAR EL DESPLEGABLE DE BÚSQUEDA ESPECÍFICA
+    document.getElementById('busq-especifica').addEventListener('change', function() {
+      let selectVal = document.getElementById('busq-val-especifico');
+      let filtro = this.value;
+      selectVal.innerHTML = '';
+      
+      if (!filtro) {
+        selectVal.style.display = 'none';
+        return;
+      }
+      
+      let fuenteValores = (filtro === 'MEDIDAS') ? datosCargados.medidas : datosCargados.densidades;
+      let opcionesHTML = ['<option value="">Selecciona valor...</option>'];
+      (fuenteValores || []).forEach(valor => {
+        opcionesHTML.push(`<option value="${valor}">${valor}</option>`);
+      });
+      
+      selectVal.innerHTML = opcionesHTML.join('');
+      selectVal.style.display = 'block';
+    });
+
+    // CONTROL INACTIVIDAD
     function resetTimer() {
       clearTimeout(timerInactividad);
       if (document.getElementById('app-container').style.display === 'block') {
         timerInactividad = setTimeout(cerrarSesion, TIEMPO_EXPIRACION);
       }
     }
-    window.onload = resetTimer; document.onmousemove = resetTimer; document.onkeypress = resetTimer;
+    window.onload = function() {
+      resetTimer();
+      agregarFilaCalculadora();
+    }; 
+    document.onmousemove = resetTimer; 
+    document.onkeypress = resetTimer;
 
-    // LOGIN & PERMISOS
+    // LOGIN CON CONTROL DE ROLES
     async function iniciarSesion() {
       let u = document.getElementById('user').value;
       let p = document.getElementById('pass').value;
@@ -385,20 +423,23 @@
         document.getElementById('login-container').style.display = 'none';
         document.getElementById('app-container').style.display = 'block';
         
-        // APLICAR PERMISOS DE ROL (Admin vs User)
-        if (usuarioActual.rol.toLowerCase() !== 'admin') {
-          document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
-          cambiarPestana('buscador');
-        } else {
-          document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'block');
-          cambiarPestana('calculadora');
-        }
-
+        aplicarPermisosPorRol(usuarioActual.rol);
         cargarDatosMaestros();
         resetTimer();
       } else {
         document.getElementById('msg-login').innerText = res.message;
       }
+    }
+
+    function aplicarPermisosPorRol(rol) {
+      let esAdmin = (rol && rol.toString().toLowerCase() === 'admin');
+      
+      // Admin ve todo; User solo ve módulo de Buscador
+      document.getElementById('tab-calc').style.display = esAdmin ? 'block' : 'none';
+      document.getElementById('tab-ing').style.display = esAdmin ? 'block' : 'none';
+      document.getElementById('tab-sal').style.display = esAdmin ? 'block' : 'none';
+
+      cambiarPestana('buscador');
     }
 
     function cerrarSesion() {
@@ -407,82 +448,114 @@
       document.getElementById('msg-login').innerText = "Sesión cerrada de forma segura.";
       document.getElementById('form-ingresos').reset();
       document.getElementById('form-salidas').reset();
+      document.getElementById('busq-texto').value = '';
+      document.getElementById('busq-especifica').value = '';
+      document.getElementById('busq-val-especifico').style.display = 'none';
       document.getElementById('tabla-head').innerHTML = '';
       document.getElementById('tabla-body').innerHTML = '';
-      usuarioActual = null;
       clearTimeout(timerInactividad);
     }
 
     function cambiarPestana(id) {
       document.querySelectorAll('.seccion').forEach(s => s.classList.remove('active'));
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      document.getElementById('sec-' + id).classList.add('active');
       
-      // Marcar pestaña activa
-      let tabs = document.querySelectorAll('.tab');
-      tabs.forEach(t => {
-        if(t.getAttribute('onclick').includes(id)) t.classList.add('active');
-      });
+      let sec = document.getElementById('sec-' + id);
+      let tab = document.getElementById('tab-' + (id.substring(0,3)));
+      if (sec) sec.classList.add('active');
+      if (tab) tab.classList.add('active');
     }
 
-    // CARGA DE DATOS MAESTROS
+    // CARGA DE LISTAS DESPLEGABLES DINÁMICAS
     async function cargarDatosMaestros() {
       let res = await ejecutarPeticionAPI('obtenerDatosFormularios');
       datosCargados = res;
       
+      // Auto-completar Datalist Inventario
       let dl = document.getElementById('lista-inventario');
       dl.innerHTML = '';
-      res.inventario.forEach(item => {
-        let opt = document.createElement('option'); opt.value = item.nombre; dl.appendChild(opt);
+      (res.inventario || []).forEach(item => {
+        let opt = document.createElement('option'); 
+        opt.value = item.nombre; 
+        dl.appendChild(opt);
       });
 
       // Llenar Unidades
-      let optUnidades = '<option value="">Seleccione...</option>';
-      res.unidades.forEach(u => optUnidades += `<option value="${u}">${u}</option>`);
-      document.getElementById('ing-unidad').innerHTML = optUnidades;
-
-      // Llenar Grosores (Medidas)
-      let optGrosores = '<option value="">Seleccione...</option>';
-      res.medidas.forEach(m => optGrosores += `<option value="${m}">${m}</option>`);
-      document.getElementById('ing-medidas').innerHTML = optGrosores;
-
+      llenarSelect('ing-unidad', res.unidades || []);
+      // Llenar Medidas / Grosor
+      llenarSelect('ing-medidas', res.medidas || []);
+      // Llenar Densidad
+      llenarSelect('ing-densidad', res.densidades || []);
       // Llenar Proveedores
-      let optProv = '<option value="">Seleccione...</option>';
-      res.proveedores.forEach(p => optProv += `<option value="${p}">${p}</option>`);
-      document.getElementById('ing-proveedor').innerHTML = optProv;
+      llenarSelect('ing-proveedor', res.proveedores || []);
 
-      // Llenar Personal / Áreas
+      // Llenar Personal RH
       let optionsRH = '<option value="">Seleccione...</option><optgroup label="Áreas">';
-      res.areas.forEach(a => optionsRH += `<option value="${a}">${a}</option>`);
+      (res.areas || []).forEach(a => optionsRH += `<option value="${a}">${a}</option>`);
       optionsRH += '</optgroup><optgroup label="Personal">';
-      res.personal.forEach(p => optionsRH += `<option value="${p}">${p}</option>`);
+      (res.personal || []).forEach(p => optionsRH += `<option value="${p}">${p}</option>`);
       optionsRH += '</optgroup>';
       
       document.getElementById('ing-entregoa').innerHTML = optionsRH;
       document.getElementById('sal-entregoa').innerHTML = optionsRH;
     }
 
-    // BUSCADOR
-    document.getElementById('busq-especifica').addEventListener('change', function() {
-      let selectVal = document.getElementById('busq-val-especifico');
-      let filtro = this.value;
-      selectVal.innerHTML = '';
-      
-      if (!filtro) { selectVal.style.display = 'none'; return; }
-      let fuenteValores = (filtro === 'MEDIDAS') ? datosCargados.medidas : datosCargados.densidades;
-      
-      let opcionesHTML = ['<option value="">Selecciona un valor...</option>'];
-      fuenteValores.forEach(valor => { opcionesHTML.push(`<option value="${valor}">${valor}</option>`); });
-      
-      selectVal.innerHTML = opcionesHTML.join('');
-      selectVal.style.display = 'block';
-    });
+    function llenarSelect(idElem, lista) {
+      let el = document.getElementById(idElem);
+      if(!el) return;
+      let html = '<option value="">Seleccione opción...</option>';
+      lista.forEach(val => html += `<option value="${val}">${val}</option>`);
+      el.innerHTML = html;
+    }
 
+    // MÓDULO CALCULADORA
+    function agregarFilaCalculadora() {
+      let tbody = document.getElementById('calc-body');
+      let tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><input type="number" step="0.01" class="c-a" placeholder="Pesos" oninput="calcularCalculadora(this)"></td>
+        <td><input type="number" step="0.0001" class="c-b" placeholder="Dec" oninput="calcularCalculadora(this)"></td>
+        <td><input type="number" step="0.0001" class="c-c" placeholder="Dec" oninput="calcularCalculadora(this)"></td>
+        <td><input type="number" step="0.01" class="c-d" placeholder="%" oninput="calcularCalculadora(this)"></td>
+        <td><input type="number" step="1" class="c-e" placeholder="Entero" oninput="calcularCalculadora(this)"></td>
+        <td><input type="number" class="c-f" readonly style="background:#e9ecef;"></td>
+        <td><input type="number" class="c-g" readonly style="background:#e9ecef;"></td>
+        <td><input type="number" class="c-h" readonly style="background:#e9ecef;"></td>
+        <td><input type="number" class="c-i" readonly style="background:#e9ecef; font-weight:bold;"></td>
+        <td><button class="btn btn-salir" style="padding:4px 8px; margin:0;" onclick="this.closest('tr').remove()">X</button></td>
+      `;
+      tbody.appendChild(tr);
+    }
+
+    function calcularCalculadora(elem) {
+      let tr = elem.closest('tr');
+      let a = parseFloat(tr.querySelector('.c-a').value) || 0;
+      let b = parseFloat(tr.querySelector('.c-b').value) || 0;
+      let c = parseFloat(tr.querySelector('.c-c').value) || 0;
+      let d = parseFloat(tr.querySelector('.c-d').value) || 0;
+      let e = parseFloat(tr.querySelector('.c-e').value) || 0;
+
+      // Columna 6 (Factura) = (A * C) / B
+      let f = (b !== 0) ? (a * c) / b : 0;
+      // Columna 7 (Con %) = Columna 6 * (Porcentaje / 100)
+      let g = f * (d / 100);
+      // Columna 8 (Subtotal) = Columna 6 + Columna 7
+      let h = f + g;
+      // Columna 9 (Total) = Columna 8 * Piezas (Columna 5)
+      let i = h * e;
+
+      tr.querySelector('.c-f').value = f.toFixed(2);
+      tr.querySelector('.c-g').value = g.toFixed(2);
+      tr.querySelector('.c-h').value = h.toFixed(2);
+      tr.querySelector('.c-i').value = i.toFixed(2);
+    }
+
+    // BUSCADOR
     async function ejecutarBusqueda() {
       let texto = document.getElementById('busq-texto').value;
       if (texto.length < 3) { alert("Ingresa mínimo 3 letras."); return; }
 
-      document.getElementById('tabla-body').innerHTML = '<tr><td colspan="15">Buscando en inventario...</td></tr>';
+      document.getElementById('tabla-body').innerHTML = '<tr><td>Buscando en la base de datos...</td></tr>';
       
       let res = await ejecutarPeticionAPI('buscarEnInventario', {
         texto: texto,
@@ -491,26 +564,26 @@
         valorEspecifico: document.getElementById('busq-val-especifico').value
       });
 
-      let thead = ''; 
-      res.cabeceras.forEach(c => thead += `<th>${c}</th>`);
-      thead += '<th>Foto</th>';
+      let thead = ''; (res.cabeceras || []).forEach(c => thead += `<th>${c}</th>`);
+      thead += '<th>Fotografía</th>';
       document.getElementById('tabla-head').innerHTML = thead;
       
       let tbody = '';
-      if (res.data.length === 0) { 
+      if (!res.data || res.data.length === 0) { 
         tbody = '<tr><td colspan="15">Sin coincidencias</td></tr>'; 
       } else {
         res.data.forEach(f => {
           tbody += '<tr>';
+          // Mostrar celdas normales
           f.forEach((c, idx) => {
             tbody += `<td>${c && c.toString().includes('GMT') ? new Date(c).toLocaleDateString() : c}</td>`;
           });
-          // Botón de foto (Columna 13 es URL foto)
-          let fotoUrl = f[13] || '';
-          if(fotoUrl) {
-            tbody += `<td><button class="btn" style="padding:4px 8px; font-size:12px;" onclick="verFotoModal('${fotoUrl}')">Ver Foto</button></td>`;
+          // Celda de Fotografía
+          let fotoUrl = f[13] || ''; // Columna 14 para Foto en la hoja
+          if (fotoUrl && fotoUrl.toString().startsWith('http')) {
+            tbody += `<td><a href="${fotoUrl}" target="_blank" class="btn-ver-foto">Ver Foto</a></td>`;
           } else {
-            tbody += `<td>Sin foto</td>`;
+            tbody += `<td><small style="color:#888;">Sin foto</small></td>`;
           }
           tbody += '</tr>';
         });
@@ -518,45 +591,67 @@
       document.getElementById('tabla-body').innerHTML = tbody;
     }
 
-    // TRANSACCIONES & EVENTOS
+    // OPCIÓN: EDITAR ÚNICAMENTE DESCRIPCIÓN
+    function toggleEdicionDescripcion() {
+      let chk = document.getElementById('ing-chk-solo-desc').checked;
+      let reqInputs = document.querySelectorAll('.ing-req');
+      let btn = document.getElementById('btn-guardar-ing');
+
+      reqInputs.forEach(i => {
+        i.required = !chk;
+        i.disabled = chk;
+      });
+
+      btn.innerText = chk ? "Actualizar Descripción Únicamente" : "Registrar Ingreso";
+    }
+
     function verificarSiExiste(prefijo) {
       let val = document.getElementById(prefijo + '-nombre').value;
-      let item = datosCargados.inventario.find(i => i.nombre.toLowerCase() === val.toLowerCase());
+      let item = (datosCargados.inventario || []).find(i => i.nombre.toLowerCase() === val.toLowerCase());
       
       if (prefijo === 'ing') {
         let aviso = document.getElementById('ing-aviso');
-        aviso.innerText = item ? "Producto EXISTENTE: Se sumará al stock." : "NUEVO PRODUCTO: Se creará.";
+        aviso.innerText = item ? "Producto EXISTENTE: Se sumará al stock." : "NUEVO PRODUCTO: Se creará en almacén.";
         aviso.style.color = item ? "var(--color-primario)" : "var(--color-exito)";
+
+        // Auto-completar datos si existe
         if(item) {
-          document.getElementById('ing-tipo').value = item.tipo || '';
-          document.getElementById('ing-unidad').value = item.unidad || '';
-          document.getElementById('ing-medidas').value = item.medidas || '';
-          document.getElementById('ing-densidad').value = item.densidad || '';
-        }
-      } else if (prefijo === 'sal') {
-        if (!item) {
-          alert("El producto no existe."); document.getElementById('sal-nombre').value = '';
-        } else {
-          document.getElementById('sal-tipo').value = item.tipo || '';
-          document.getElementById('sal-unidad').value = item.unidad || '';
+          if(item.tipo) document.getElementById('ing-tipo').value = item.tipo;
+          if(item.unidad) document.getElementById('ing-unidad').value = item.unidad;
+          if(item.medidas) document.getElementById('ing-medidas').value = item.medidas;
+          if(item.densidad) document.getElementById('ing-densidad').value = item.densidad;
         }
       }
     }
 
-    function toggleEdicionDescripcion() {
-      let soloDesc = document.getElementById('ing-chk-edicion').checked;
-      document.getElementById('ing-cantidad').disabled = soloDesc;
-      document.getElementById('ing-precio').disabled = soloDesc;
-      if(soloDesc) {
-        document.getElementById('ing-cantidad').value = 0;
-        document.getElementById('ing-precio').value = 0;
-        document.getElementById('ing-total').value = 0;
+    function cargarDatosSalida() {
+      let nombre = document.getElementById('sal-nombre').value;
+      let item = (datosCargados.inventario || []).find(i => i.nombre.toLowerCase() === nombre.toLowerCase());
+      
+      if (item) {
+        document.getElementById('sal-tipo').value = item.tipo || '';
+        document.getElementById('sal-unidad').value = item.unidad || '';
+      } else {
+        alert("El producto no existe en el inventario.");
+        document.getElementById('sal-nombre').value = '';
+        document.getElementById('sal-tipo').value = '';
+        document.getElementById('sal-unidad').value = '';
       }
     }
 
-    function toggleOrdenProduccion() {
-      let val = document.getElementById('sal-tipo-asignacion').value;
-      document.getElementById('box-orden-prod').style.display = (val === 'Orden de Producción') ? 'block' : 'none';
+    function toggleTipoAsignacion() {
+      let val = document.getElementById('sal-tipo-asig').value;
+      let divOrden = document.getElementById('div-sal-orden');
+      let inputOrden = document.getElementById('sal-orden');
+      
+      if (val === 'Orden de Producción') {
+        divOrden.style.display = 'block';
+        inputOrden.required = true;
+      } else {
+        divOrden.style.display = 'none';
+        inputOrden.required = false;
+        inputOrden.value = '';
+      }
     }
 
     function calcularTotal(prefijo) {
@@ -565,142 +660,65 @@
       document.getElementById(prefijo + '-total').value = (c * p).toFixed(2);
     }
 
-    function previsualizarFoto(input, imgId) {
-      if (input.files && input.files[0]) {
+    // PROCESAMIENTO DE IMÁGENES A BASE64
+    function procesarFoto(inputElem, targetId) {
+      if (inputElem.files && inputElem.files[0]) {
         let reader = new FileReader();
         reader.onload = function(e) {
-          let img = document.getElementById(imgId);
-          img.src = e.target.result;
-          img.style.display = 'block';
+          document.getElementById(targetId).value = e.target.result;
         };
-        reader.readAsDataURL(input.files[0]);
+        reader.readAsDataURL(inputElem.files[0]);
       }
     }
 
-    async function convertirArchivoBase64(file) {
-      return new Promise((resolve, reject) => {
-        if (!file) resolve(null);
-        let reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve({ base64: reader.result.split(',')[1], mimeType: file.type, name: file.name });
-        reader.onerror = error => reject(error);
-      });
-    }
-
+    // TRANSACCIONES (INGRESO / SALIDA)
     async function guardarTransaccion(tipoTx) {
       let prefijo = tipoTx === 'INGRESO' ? 'ing' : 'sal';
       let nombre = document.getElementById(prefijo + '-nombre').value;
-      if (!nombre) return alert("Nombre de producto requerido");
+      if (!nombre) return alert("El nombre del producto es obligatorio.");
 
-      let soloDescripcion = (tipoTx === 'INGRESO') ? document.getElementById('ing-chk-edicion').checked : false;
-
-      let fileInput = document.getElementById(prefijo + '-foto');
-      let fotoData = null;
-      if (fileInput && fileInput.files[0]) {
-        fotoData = await convertirArchivoBase64(fileInput.files[0]);
-      }
+      let soloDesc = (tipoTx === 'INGRESO') && document.getElementById('ing-chk-solo-desc').checked;
 
       let datos = {
-        tipo: document.getElementById(prefijo + '-tipo').value || '',
+        tipo: document.getElementById(prefijo + '-tipo') ? document.getElementById(prefijo + '-tipo').value : '',
         movimiento: tipoTx, 
         nombre: nombre,
-        unidad: document.getElementById(prefijo + '-unidad').value || '',
+        unidad: document.getElementById(prefijo + '-unidad') ? document.getElementById(prefijo + '-unidad').value : '',
         medidas: document.getElementById(prefijo + '-medidas') ? document.getElementById(prefijo + '-medidas').value : '',
         densidad: document.getElementById(prefijo + '-densidad') ? document.getElementById(prefijo + '-densidad').value : '',
-        cantidad: document.getElementById(prefijo + '-cantidad').value || 0,
+        cantidad: document.getElementById(prefijo + '-cantidad') ? document.getElementById(prefijo + '-cantidad').value : 0,
         precio: document.getElementById(prefijo + '-precio') ? document.getElementById(prefijo + '-precio').value : 0,
         total: document.getElementById(prefijo + '-total') ? document.getElementById(prefijo + '-total').value : 0,
         proveedor: document.getElementById(prefijo + '-proveedor') ? document.getElementById(prefijo + '-proveedor').value : '',
         descripcion: document.getElementById(prefijo + '-descripcion').value || '',
         entregoA: document.getElementById(prefijo + '-entregoa').value,
-        soloDescripcion: soloDescripcion,
-        foto: fotoData,
-        esNuevo: tipoTx === 'INGRESO' ? !datosCargados.inventario.find(i => i.nombre.toLowerCase() === nombre.toLowerCase()) : false
+        fotoData: document.getElementById(prefijo + '-foto-data').value || '',
+        soloDescripcion: soloDesc,
+        esNuevo: tipoTx === 'INGRESO' ? !(datosCargados.inventario || []).find(i => i.nombre.toLowerCase() === nombre.toLowerCase()) : false
       };
 
       if (tipoTx === 'SALIDA') {
-        let tipoAsig = document.getElementById('sal-tipo-asignacion').value;
-        datos.ordenProd = (tipoAsig === 'Orden de Producción') ? document.getElementById('sal-orden').value : tipoAsig;
+        let tipoAsig = document.getElementById('sal-tipo-asig').value;
+        datos.ordenProd = (tipoAsig === 'Orden de Producción') ? ('OP: ' + document.getElementById('sal-orden').value) : tipoAsig;
       }
 
-      let btn = event.target; btn.disabled = true;
+      let btn = event.target; 
+      btn.disabled = true;
+      btn.innerText = "Procesando...";
+
       let res = await ejecutarPeticionAPI('procesarTransaccion', { tipoTx: tipoTx, datos: datos });
+      
       btn.disabled = false;
+      btn.innerText = tipoTx === 'INGRESO' ? (soloDesc ? "Actualizar Descripción Únicamente" : "Registrar Ingreso") : "Registrar Salida";
       
       alert(res.message);
       if (res.success) {
         document.getElementById('form-' + (tipoTx==='INGRESO'?'ingresos':'salidas')).reset();
-        document.querySelectorAll('.preview-img').forEach(img => img.style.display = 'none');
+        document.getElementById(prefijo + '-foto-data').value = '';
         if(document.getElementById('ing-aviso')) document.getElementById('ing-aviso').innerText = '';
         cargarDatosMaestros();
       }
     }
-
-    // MODAL FOTO
-    function verFotoModal(url) {
-      document.getElementById('img-modal-src').src = url;
-      document.getElementById('modal-foto').style.display = 'flex';
-    }
-    function cerrarModalFoto() {
-      document.getElementById('modal-foto').style.display = 'none';
-    }
-
-    // ==========================================
-    // MÓDULO CALCULADORA DENSAMENTE INTERACTIVA
-    // ==========================================
-    function agregarFilaCalculadora() {
-      let tbody = document.getElementById('body-calculadora');
-      let tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td><input type="number" step="0.01" class="calc-col1" oninput="calcularFila(this)" value="0"></td>
-        <td><input type="number" step="0.01" class="calc-col2" oninput="calcularFila(this)" value="1"></td>
-        <td><input type="number" step="0.01" class="calc-col3" oninput="calcularFila(this)" value="1"></td>
-        <td><input type="number" step="0.01" class="calc-col4" oninput="calcularFila(this)" value="0"></td>
-        <td><input type="number" step="1" class="calc-col5" oninput="calcularFila(this)" value="1"></td>
-        <td><input type="number" class="calc-col6" readonly></td>
-        <td><input type="number" class="calc-col7" readonly></td>
-        <td><input type="number" class="calc-col8" readonly></td>
-        <td><input type="number" class="calc-col9" readonly style="font-weight:bold;"></td>
-        <td><button class="btn btn-salir" style="float:none; padding: 4px 8px;" onclick="eliminarFilaCalc(this)">X</button></td>
-      `;
-      tbody.appendChild(tr);
-    }
-
-    function eliminarFilaCalc(btn) {
-      btn.closest('tr').remove();
-    }
-
-    function calcularFila(element) {
-      let tr = element.closest('tr');
-      let col1 = parseFloat(tr.querySelector('.calc-col1').value) || 0; // Precio
-      let col2 = parseFloat(tr.querySelector('.calc-col2').value) || 1; // Factor Ini
-      let col3 = parseFloat(tr.querySelector('.calc-col3').value) || 0; // Factor Fin
-      let col4 = parseFloat(tr.querySelector('.calc-col4').value) || 0; // Porcentaje
-      let col5 = parseFloat(tr.querySelector('.calc-col5').value) || 0; // Piezas
-
-      // REGLAS SOLICITADAS:
-      // Col 6 = (Col 1 * Col 3) / Col 2
-      let col6 = (col1 * col3) / (col2 === 0 ? 1 : col2);
-      
-      // Col 7 = Col 6 * (Col 4 / 100)
-      let col7 = col6 * (col4 / 100);
-      
-      // Col 8 = Col 6 + Col 7
-      let col8 = col6 + col7;
-      
-      // Col 9 = Col 8 * Col 5
-      let col9 = col8 * col5;
-
-      tr.querySelector('.calc-col6').value = col6.toFixed(2);
-      tr.querySelector('.calc-col7').value = col7.toFixed(2);
-      tr.querySelector('.calc-col8').value = col8.toFixed(2);
-      tr.querySelector('.calc-col9').value = col9.toFixed(2);
-    }
-
-    // Fila por defecto al arrancar calculadora
-    window.addEventListener('DOMContentLoaded', () => {
-      agregarFilaCalculadora();
-    });
   </script>
 </body>
 </html>
