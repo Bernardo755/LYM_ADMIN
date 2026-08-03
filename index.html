@@ -153,7 +153,7 @@
       <div class="tab" id="tab-sal" onclick="cambiarPestana('salidas')">Registrar Salida</div>
     </div>
 
-    <!-- SECCIÓN 0: CALCULADORA (NUEVO MÓDULO ANTES DEL BUSCADOR) -->
+    <!-- SECCIÓN 0: CALCULADORA -->
     <div id="sec-calculadora" class="seccion panel">
       <h3>Calculadora de Regla de Tres y Costos</h3>
       <div style="overflow-x: auto;">
@@ -182,8 +182,16 @@
 
     <!-- SECCIÓN 1: BUSCADOR -->
     <div id="sec-buscador" class="seccion active panel">
-      <h3>Buscar en Inventario</h3>
+      <h3>Buscar Información</h3>
       <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+        
+        <!-- NUEVO: SELECCIÓN DE HOJA -->
+        <select id="busq-hoja" style="flex: 1; min-width: 130px; background-color: #eef4fc; border-color: var(--color-primario);">
+          <option value="Inventario">Inventario</option>
+          <option value="Entradas">Entradas</option>
+          <option value="Salidas">Salidas</option>
+        </select>
+
         <input type="text" id="busq-texto" placeholder="Buscar producto (Mín. 3 letras)..." style="flex: 2; min-width: 200px;">
         
         <select id="busq-general" style="flex: 1; min-width: 150px;">
@@ -230,35 +238,39 @@
         <div class="form-grid">
           <div>
             <label>Nombre/Producto:</label>
-            <input type="text" id="ing-nombre" list="lista-inventario" onchange="verificarSiExiste('ing')" required>
+            <input type="text" id="ing-nombre" list="lista-inventario" onchange="verificarSiExiste('ing')" required placeholder="Seleccione o escriba...">
             <small id="ing-aviso"></small>
           </div>
           <div>
             <label>Tipo:</label>
-            <select id="ing-tipo" class="ing-req" required>
-              <option value="">Seleccione Tipo...</option>
-              <option value="Espuma">Espuma</option>
-              <option value="Barniz">Barniz</option>
-              <option value="Madera">Madera</option>
-              <option value="Herrajes">Herrajes</option>
-              <option value="Lijas">Lijas</option>
-              <option value="Empaque">Empaque</option>
-              <option value="Telas">Telas</option>
-              <option value="Estructuras">Estructuras</option>
-              <option value="Otro">Otro</option>
-            </select>
+            <!-- REEMPLAZADO POR DATALIST -->
+            <input type="text" id="ing-tipo" list="lista-tipos" class="ing-req" required placeholder="Seleccione o escriba...">
+            <datalist id="lista-tipos">
+              <option value="Espuma">
+              <option value="Barniz">
+              <option value="Madera">
+              <option value="Herrajes">
+              <option value="Lijas">
+              <option value="Empaque">
+              <option value="Telas">
+              <option value="Estructuras">
+              <option value="Otro">
+            </datalist>
           </div>
           <div>
             <label>Unidad de Medida:</label>
-            <select id="ing-unidad" class="ing-req" required></select>
+            <input type="text" id="ing-unidad" list="lista-unidades" class="ing-req" required placeholder="Seleccione o escriba...">
+            <datalist id="lista-unidades"></datalist>
           </div>
           <div>
             <label>Grosor:</label>
-            <select id="ing-medidas"></select>
+            <input type="text" id="ing-medidas" list="lista-medidas" placeholder="Seleccione o escriba...">
+            <datalist id="lista-medidas"></datalist>
           </div>
           <div>
             <label>Densidad:</label>
-            <select id="ing-densidad"></select>
+            <input type="text" id="ing-densidad" list="lista-densidades" placeholder="Seleccione o escriba...">
+            <datalist id="lista-densidades"></datalist>
           </div>
           <div>
             <label>Cantidad:</label>
@@ -274,7 +286,8 @@
           </div>
           <div>
             <label>Proveedor:</label>
-            <select id="ing-proveedor"></select>
+            <input type="text" id="ing-proveedor" list="lista-proveedores" placeholder="Seleccione o escriba...">
+            <datalist id="lista-proveedores"></datalist>
           </div>
           <div>
             <label>Entregó a:</label>
@@ -352,7 +365,7 @@
        MÓDULO: ENLACE Y LÓGICA DE CONTROL (JS)
        ========================================== -->
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyN2YFIf42vx1EUhqVE2fQApr7lXXiGmtg3ojD8DSrHDshw2qSrmTsqEn1WgIM2aDx6jg/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx0lrN1OBnDDGaxoxucUAvdm20tdjsupg4trwSezy0oqvoHYFfFjlli566IVxib8LfgWQ/exec";
 
     let timerInactividad;
     const TIEMPO_EXPIRACION = 3600000; // 1 hora
@@ -466,7 +479,7 @@
       if (tab) tab.classList.add('active');
     }
 
-    // CARGA DE LISTAS DESPLEGABLES DINÁMICAS
+    // CARGA DE LISTAS DESPLEGABLES DINÁMICAS (AHORA COMO DATALIST)
     async function cargarDatosMaestros() {
       let res = await ejecutarPeticionAPI('obtenerDatosFormularios');
       datosCargados = res;
@@ -480,16 +493,13 @@
         dl.appendChild(opt);
       });
 
-      // Llenar Unidades
-      llenarSelect('ing-unidad', res.unidades || []);
-      // Llenar Medidas / Grosor
-      llenarSelect('ing-medidas', res.medidas || []);
-      // Llenar Densidad
-      llenarSelect('ing-densidad', res.densidades || []);
-      // Llenar Proveedores
-      llenarSelect('ing-proveedor', res.proveedores || []);
+      // Llenar nuevos Datalists en lugar de selects
+      llenarDatalist('lista-unidades', res.unidades || []);
+      llenarDatalist('lista-medidas', res.medidas || []);
+      llenarDatalist('lista-densidades', res.densidades || []);
+      llenarDatalist('lista-proveedores', res.proveedores || []);
 
-      // Llenar Personal RH
+      // Llenar Personal RH (Se mantiene como Select porque tiene "Optgroups")
       let optionsRH = '<option value="">Seleccione...</option><optgroup label="Áreas">';
       (res.areas || []).forEach(a => optionsRH += `<option value="${a}">${a}</option>`);
       optionsRH += '</optgroup><optgroup label="Personal">';
@@ -500,11 +510,12 @@
       document.getElementById('sal-entregoa').innerHTML = optionsRH;
     }
 
-    function llenarSelect(idElem, lista) {
+    // Función auxiliar para llenar <datalist>
+    function llenarDatalist(idElem, lista) {
       let el = document.getElementById(idElem);
       if(!el) return;
-      let html = '<option value="">Seleccione opción...</option>';
-      lista.forEach(val => html += `<option value="${val}">${val}</option>`);
+      let html = '';
+      lista.forEach(val => html += `<option value="${val}">`);
       el.innerHTML = html;
     }
 
@@ -550,7 +561,7 @@
       tr.querySelector('.c-i').value = i.toFixed(2);
     }
 
-    // BUSCADOR
+    // BUSCADOR MEJORADO (CON BÚSQUEDA DINÁMICA DE FOTOS Y SELECCIÓN DE HOJA)
     async function ejecutarBusqueda() {
       let texto = document.getElementById('busq-texto').value;
       if (texto.length < 3) { alert("Ingresa mínimo 3 letras."); return; }
@@ -559,6 +570,7 @@
       
       let res = await ejecutarPeticionAPI('buscarEnInventario', {
         texto: texto,
+        hoja: document.getElementById('busq-hoja').value, // <--- SE ENVÍA EL DATO DE LA HOJA
         filtroGeneral: document.getElementById('busq-general').value,
         filtroEspecifico: document.getElementById('busq-especifica').value,
         valorEspecifico: document.getElementById('busq-val-especifico').value
@@ -570,17 +582,26 @@
       
       let tbody = '';
       if (!res.data || res.data.length === 0) { 
-        tbody = '<tr><td colspan="15">Sin coincidencias</td></tr>'; 
+        tbody = '<tr><td colspan="15">Sin coincidencias en esta hoja</td></tr>'; 
       } else {
         res.data.forEach(f => {
           tbody += '<tr>';
-          // Mostrar celdas normales
+          
+          let fotoUrl = ''; 
+          
+          // Detección dinámica: buscamos celda por celda si contiene un enlace de Google Drive
           f.forEach((c, idx) => {
-            tbody += `<td>${c && c.toString().includes('GMT') ? new Date(c).toLocaleDateString() : c}</td>`;
+            let valorCelda = c ? c.toString() : '';
+            if (valorCelda.startsWith('http')) {
+                fotoUrl = valorCelda; // Atrapamos el link de la foto sin importar en qué columna esté
+                tbody += `<td><small style="color:#888;">[Link Adjunto]</small></td>`;
+            } else {
+                tbody += `<td>${valorCelda.includes('GMT') ? new Date(c).toLocaleDateString() : valorCelda}</td>`;
+            }
           });
-          // Celda de Fotografía
-          let fotoUrl = f[13] || ''; // Columna 14 para Foto en la hoja
-          if (fotoUrl && fotoUrl.toString().startsWith('http')) {
+          
+          // Renderizamos el botón al final de la fila si encontramos el enlace
+          if (fotoUrl) {
             tbody += `<td><a href="${fotoUrl}" target="_blank" class="btn-ver-foto">Ver Foto</a></td>`;
           } else {
             tbody += `<td><small style="color:#888;">Sin foto</small></td>`;
